@@ -24,7 +24,7 @@ videoQueue.process(async (job) => {
   const outputFileName = `processed_${Date.now()}.mkv`;
   const inputVideo = `input-video_${Date.now()}.mkv`
 
-  const command = `wget -O ${inputVideo} "${videoLink}" && ffmpeg -i ${inputVideo} -af "highpass=f=200, lowpass=f=3000, afftdn=nf=-25" ${outputFileName} && rm ${inputVideo}`;
+  const command = `wget -c -O ${inputVideo} "${videoLink}" && ffmpeg -i ${inputVideo} -af "highpass=f=200, lowpass=f=3000, afftdn=nf=-25" ${outputFileName}`;
 
   // Execute the FFmpeg command
   exec(command, (error, stdout, stderr) => {
@@ -35,6 +35,7 @@ videoQueue.process(async (job) => {
       console.log(`Video processed successfully: ${outputFileName}`);
       job.moveToCompleted({ processedVideo: outputFileName }, true);
     }
+    exec(`rm ${inputVideo}`);
   });
   // Return a promise to indicate the completion of the job processing
   return new Promise((resolve,reject) => {
