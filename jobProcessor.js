@@ -36,10 +36,9 @@ videoQueue.process(async (job) => {
       job.moveToCompleted({ processedVideo: outputFileName }, true);
     }
   });
-
   // Return a promise to indicate the completion of the job processing
-  return new Promise((resolve) => {
-    exec.on('exit', resolve);
+  return new Promise((resolve,reject) => {
+    resolve();
   });
 });
 

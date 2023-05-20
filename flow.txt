@@ -4,3 +4,5 @@ sudo apt intall ffmeg
 
 
 wget -O input-video.mkv "https://drive.google.com/uc?export=download&id=1c5308SSHbynH9aNSjLVZH2-Xt_Nfm8VK" && ffmpeg -i input-video.mkv -af "highpass=f=200, lowpass=f=3000, afftdn=nt=w:om=o" output-video.mkv
+
+curl -X POST -H "Content-Type: application/json" -d '{"videoLink" : "https://drive.google.com/file/d/1c5308SSHbynH9aNSjLVZH2-Xt_Nfm8VK/view?usp=share_link"}' http://localhost:3000/jobs
