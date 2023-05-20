@@ -1,8 +1,14 @@
-npm i express bull
-install 
-sudo apt intall ffmeg
+//Go to directory having package.json file and run following commands
+sudo apt update
+sudo apt intall ffmeg redis nodejs npm curl
+npm i
+redis-server --deamonize yes //This will run redis server on port 6379 in de-attached mode.
+npm start //run server
 
 
-wget -O input-video.mkv "https://drive.google.com/uc?export=download&id=1c5308SSHbynH9aNSjLVZH2-Xt_Nfm8VK" && ffmpeg -i input-video.mkv -af "highpass=f=200, lowpass=f=3000, afftdn=nt=w:om=o" output-video.mkv
+//below lines will make a post request with respected link.
+curl -X POST -H "Content-Type: application/json" -d '{"videoLink" : "https://drive.google.com/file/d/1_nDZSrtG7c8cm6pRHVy7y6gO9yzcFkgf/view?usp=share_link"}' http://localhost:3000/jobs
 
-curl -X POST -H "Content-Type: application/json" -d '{"videoLink" : "https://drive.google.com/file/d/1c5308SSHbynH9aNSjLVZH2-Xt_Nfm8VK/view?usp=share_link"}' http://localhost:3000/jobs
+//the processed video can be access using process id.
+curl http://localhost:3000/jobs/PROCESS_ID
+
