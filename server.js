@@ -11,6 +11,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+app.get('/',(req,res) => {
+  res.send("Hello!!");
+})
 
 app.get('/jobs/:jobId', async (req, res) => {
   const jobId = req.params.jobId;
