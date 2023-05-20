@@ -1,0 +1,6 @@
+npm i express bull
+install 
+sudo apt intall ffmeg
+
+
+wget -O input-video.mkv "https://drive.google.com/uc?export=download&id=1c5308SSHbynH9aNSjLVZH2-Xt_Nfm8VK" && ffmpeg -i input-video.mkv -af "highpass=f=200, lowpass=f=3000, afftdn=nt=w:om=o" output-video.mkv
