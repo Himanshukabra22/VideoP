@@ -23,6 +23,7 @@ app.get('/jobs/:jobId', async (req, res) => {
     res.status(404).json({ status: 'error', message: 'Job not found.' });
     return;
   }
+  
   if(job.failedReason !== undefined)
   {
     res.json({status : "not ok"});
