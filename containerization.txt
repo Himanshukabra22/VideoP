@@ -1,0 +1,4 @@
+Ubuntu
+NodeJs
+Redis
+ffmpeg
