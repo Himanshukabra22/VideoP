@@ -1,7 +1,24 @@
 const mongoose = require("mongoose");
 
-const datSchema = new mongoose.Schema({
-    
+const dataSchema = new mongoose.Schema({
+    url: {
+        type: String,
+        required: true,
+      },
+    id: {
+        type: Number,
+        unique: true,
+        required: true
+      },
+    cryptostring: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+    date: {
+        type: Number,
+        required: true,
+      }
 });
 
 //we will create a new connection

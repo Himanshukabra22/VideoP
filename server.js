@@ -1,7 +1,10 @@
 const express = require("express");
 const fs = require('fs');
 const cors = require("cors");
+const crypto = require("crypto")
+const bodyParser = require('body-parser')
 const dbconnect = require("./db/connection.js");
+const dataModel = require("./db/model.js");
 
 const app = express();
 const port = process.env.PORT || 3000 ;
@@ -9,6 +12,7 @@ const videoQueue = require("./jobProcessor");
 require("dotenv").config();
 
 app.use(cors());
+app.use(bodyParser.json())
 app.use(express.json());
 
 // function checkFileExists(filePath) {
@@ -87,7 +91,12 @@ app.post("/jobs", async (req, res) => {
   try {
     const job = await videoQueue.add({ videoLink });
     if (job) {
-      res.json({ status: "ok", jobId: job.id });
+      let cryptostring = crypto.randomBytes(3).toString('hex');
+      const user = await dataModel.create({url : videoLink, id : job.id, cryptostring, date : Date.now()});
+      if(user){
+        res.json({ status: "ok", message : "Video is added for further processing", jobId: cryptostring });
+      }
+      res.json({ status: "not ok"});
     } else {
       res.json({ status: "not ok" });
     }
