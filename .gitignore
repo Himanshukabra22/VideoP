@@ -1,6 +1,7 @@
 /node_modules
 /input_files
 /output_files
-./dump.rdb
-./backup_server.txt
-./containerization.txt
+/.env
+/dump.rdb
+/backup_server.txt
+/containerization.txt

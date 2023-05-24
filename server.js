@@ -1,10 +1,14 @@
 const express = require("express");
 const fs = require('fs');
+const cors = require("cors");
+const dbconnect = require("./db/connection.js");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000 ;
 const videoQueue = require("./jobProcessor");
+require("dotenv").config();
 
+app.use(cors());
 app.use(express.json());
 
 // function checkFileExists(filePath) {
@@ -92,6 +96,16 @@ app.post("/jobs", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+const serverStart = async () => {
+  try {
+    await dbconnect(process.env.MONGO_URI);
+    console.log("Connected to the DB");
+    app.listen(port, () => {
+      console.log(`http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+serverStart();
