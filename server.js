@@ -1,18 +1,19 @@
 const express = require("express");
-const fs = require('fs');
+const fs = require("fs");
+const path = require("path")
 const cors = require("cors");
-const crypto = require("crypto")
-const bodyParser = require('body-parser')
+const crypto = require("crypto");
+const bodyParser = require("body-parser");
 const dbconnect = require("./db/connection.js");
 const dataModel = require("./db/model.js");
 
 const app = express();
-const port = process.env.PORT || 3000 ;
+const port = process.env.PORT || 3000;
 const videoQueue = require("./jobProcessor");
 require("dotenv").config();
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(express.json());
 
 // function checkFileExists(filePath) {
@@ -40,7 +41,9 @@ app.get("/", (req, res) => {
 app.get("/jobs/:jobId", async (req, res) => {
   const jobId = req.params.jobId;
   try {
-    const job = await videoQueue.getJob(jobId);
+    // let job = await videoQueue.getJob(jobId);
+    let value = await dataModel.findOne({ cryptostring: jobId });
+    const job = await videoQueue.getJob(value.id);
 
     if (!job) {
       res.status(404).json({ status: "not ok", message: "Job not found." });
@@ -55,29 +58,49 @@ app.get("/jobs/:jobId", async (req, res) => {
     // console.log(`Job progress : ${jobProgress}`);
 
     if (job.failedReason !== undefined) {
-      res.json({ status: "not ok", message : "Job processing failed."});
+      res.json({ status: "not ok", message: "Job processing failed." });
     }
 
     const jobFinished = await job.finished();
     console.log(`Job finished : ${jobFinished}`);
 
-    if(jobFinished!==null)
-    {
+    if (jobFinished !== null) {
       const isCompletedJob = await job.isCompleted();
       // console.log(`isCompletedJob : ${isCompletedJob}`);
       if (isCompletedJob) {
-        console.log("JOB COMPLETED");
-        res.json({
-          status: "ok",
-          message : "Job processing completed.",
-          processedVideo: job.returnvalue.processedVideo,
-        });
+        // console.log("JOB COMPLETED");
+        // console.log(job.returnvalue);
+        // res.json({
+        //   status: "ok",
+        //   message : "Job processing completed.",
+        //   processedVideo: job.returnvalue.processedVideo,
+        // });
+        const videoPath = path.join(__dirname, "output_files", job.returnvalue.processedVideo); // Path to the video file
+        console.log(videoPath);
+        // Check if the file exists
+        if (fs.existsSync(videoPath)) {
+          // Set the appropriate headers for the response
+          res.setHeader("Content-Type", "video/mp4");
+          res.setHeader(
+            "Content-Disposition",
+            "attachment; filename=video.mp4"
+          );
+
+          // Create a readable stream from the video file
+          const stream = fs.createReadStream(videoPath);
+
+          // Pipe the stream into the response to download the file
+          stream.pipe(res);
+        } else {
+          // File not found, send a 404 response
+          res.status(404).send("File not found");
+        }
         return;
       }
     }
     res.json({
       status: "ok",
-      message : "Job is under process."
+      message: "Job is under process.",
     });
     return;
   } catch (error) {
@@ -91,14 +114,25 @@ app.post("/jobs", async (req, res) => {
   try {
     const job = await videoQueue.add({ videoLink });
     if (job) {
-      let cryptostring = crypto.randomBytes(3).toString('hex');
-      const user = await dataModel.create({url : videoLink, id : job.id, cryptostring, date : Date.now()});
-      if(user){
-        res.json({ status: "ok", message : "Video is added for further processing", jobId: cryptostring });
+      let cryptostring = crypto.randomBytes(3).toString("hex");
+      const user = await dataModel.create({
+        url: videoLink,
+        id: job.id,
+        cryptostring,
+        date: Date.now(),
+      });
+      if (user) {
+        res.json({
+          status: "ok",
+          message: "Video is added for further processing",
+          jobId: cryptostring,
+        });
       }
-      res.json({ status: "not ok"});
     } else {
-      res.json({ status: "not ok" });
+      res.json({
+        status: "not ok",
+        message: "Job created but not saved in db.",
+      });
     }
   } catch (error) {
     res.json({ status: "not ok", error });
