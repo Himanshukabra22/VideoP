@@ -6,11 +6,11 @@ const crypto = require("crypto");
 const bodyParser = require("body-parser");
 const dbconnect = require("./db/connection.js");
 const dataModel = require("./db/model.js");
+const videoQueue = require("./jobProcessor");
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const videoQueue = require("./jobProcessor");
-require("dotenv").config();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -43,12 +43,12 @@ app.get("/jobs/:jobId", async (req, res) => {
   try {
     // let job = await videoQueue.getJob(jobId);
     let value = await dataModel.findOne({ cryptostring: jobId });
-    const job = await videoQueue.getJob(value.id);
-
-    if (!job) {
+    if (value === null) {
       res.status(404).json({ status: "not ok", message: "Job not found." });
       return;
     }
+
+    const job = await videoQueue.getJob(value.id);
 
     // console.log("DEBUG OPEN");
     // console.log(job);
