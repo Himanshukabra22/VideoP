@@ -1,0 +1,153 @@
+import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+
+// constants
+import Colors from '../constants/colors';
+import { SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../constants/screen';
+import * as Platform from '../constants/platform';
+
+// components
+import Header from '../components/header';
+import UploadVideo from '../components/uploadVideo';
+import InfoBanner from '../components/infoBanner';
+
+const Home = () => {
+    return (
+        <>
+            <View style={styles.container}>
+                <Header />
+                <View>
+                    <Image source={require('../../assets/images/Heading.png')} style={styles.SiteHeadingImg} />
+                </View>
+                <Image source={require('../../assets/images/ColoredCircle.png')} style={styles.ColoredCircle} />
+                <View style={styles.SiteDescriptionBox}>
+                    <Text style={styles.SiteDescriptionTxt}>Welcome to NoiseRemover.io{'\n'}your go-to online tool for effortless video noise removal. Say goodbye to unwanted background noise and distractions in your videos, and say hello to superior video quality.</Text>
+                </View>
+                <View style={styles.mainContainer}>
+                    <View style={styles.WebFrontImgBox}>
+                        <Image source={require('../../assets/images/WebFrontIllustration.png')} style={styles.WebFrontImg} />
+                    </View>
+                    <UploadVideo />
+                </View>
+                {
+                    Platform.IS_WEB && width > 700 && <Image source={require('../../assets/images/SwirlingArrow.png')} style={styles.SwirlingArrow} />
+                }
+                {/* <View style={{ width: 100, height: 200, backgroundColor: 'black' }} /> */}
+                {/* <Image source={require('../../assets/images/ShadeCircles.png')} style={styles.ShadeCircles} /> */}
+                <InfoBanner />
+                <View style={styles.SiteAboutBox}>
+                    <View>
+                        <Image source={require('../../assets/images/Illustration.png')} style={styles.IllustrationImg} />
+                    </View>
+                    <View style={styles.SiteAboutSubBox}>
+                        <View>
+                            <Image source={require('../../assets/images/SiteAboutHeading.png')} style={styles.SiteAboutHeading} />
+                        </View>
+                        <View>
+                            <Text style={styles.SiteAboutDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing egestas proin egestas amet bibendum pharetra. Et nulla eu blandit commodo proin urna, viverra  Sit id laoreet magna sem nunc. Ultricies accumsan leo suspendisse sit.</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </>
+    )
+};
+
+const styles = StyleSheet.create({
+    container: {
+        width: width,
+        height: '100%',
+        backgroundColor: Colors.bg,
+        alignItems: 'center',
+        maxWidth: width - 17,
+        // paddingLeft: 10,
+    },
+    SiteHeadingImg: {
+        marginTop: 20,
+        aspectRatio: 4.044,
+        height: Platform.IS_LARGE_SCREEN ? (Platform.IS_MEDIUM_SCREEN ? (Platform.IS_SMALL_SCREEN ? 78 : 82) : 100) : 170,
+    },
+    ColoredCircle: {
+        position: 'absolute',
+        top: Platform.IS_LARGE_SCREEN ? 150 : 190,
+        left: Platform.IS_LARGE_SCREEN ? 40 : 300,
+        width: Platform.IS_LARGE_SCREEN ? 72 : 154,
+        height: Platform.IS_LARGE_SCREEN ? 70 : 150,
+        transform: [{ scaleX: 1 }],
+    },
+    SiteDescriptionBox: {
+        marginTop: 10,
+        width: Platform.IS_LARGE_SCREEN ? '80%' : width * 0.522,
+        letterSpacing: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    SiteDescriptionTxt: {
+        color: Colors.typoBlack,
+        fontSize: Platform.IS_LARGE_SCREEN ? 16 : 18,
+        fontWeight: Platform.IS_LARGE_SCREEN ? '300' : '400',
+        textAlign: 'center',
+    },
+    mainContainer: {
+        width: '100%',
+        paddingHorizontal: Platform.IS_LARGE_SCREEN ? 0 : 100,
+        flexDirection: Platform.IS_LARGE_SCREEN ? 'column' : 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    WebFrontImgBox: {
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    WebFrontImg: {
+        width: Platform.IS_XLARGE_SCREEN ? (Platform.IS_LARGE_SCREEN ? 290 : 380) : 450,
+        height: Platform.IS_XLARGE_SCREEN ? (Platform.IS_LARGE_SCREEN ? 290 : 380) : 450,
+    },
+    SwirlingArrow: {
+        position: 'absolute',
+        top: 130,
+        right: 150,
+        width: width / 5.143,
+        height: 280,
+    },
+    ShadeCircles: {
+        aspectRatio: 1,
+        position: 'absolute',
+        left: 0,
+        bottom: -150,
+        width: 800,
+        zIndex: -1,
+    },
+    SiteAboutBox: {
+        width: '80%',
+        height: '30%',
+        marginTop: 50,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-around',
+    },
+    IllustrationImg: {
+        position: 'relative',
+        top: 70,
+        width: Platform.IS_LARGE_SCREEN ? 200 : 380,
+        height: Platform.IS_LARGE_SCREEN ? 200 : 380,
+    },
+    SiteAboutSubBox: {
+        alignItems: 'flex-end',
+    },
+    SiteAboutHeading: {
+        aspectRatio: 2.7508,
+        width: 600,
+    },
+    SiteAboutDesc: {
+        fontSize: Platform.IS_LARGE_SCREEN ? 14 : 26,
+        fontWeight: '300',
+        color: Colors.typoBlack,
+        textAlign: 'left',
+        marginTop: 15,
+        maxWidth: 500,
+    },
+});
+
+export default Home;

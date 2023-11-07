@@ -1,21 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {} from 'react';
+import { SafeAreaView, StatusBar } from 'react-native';
 
-export default function App() {
+// screen
+import Home from './src/screens/home';
+
+// constants
+import Colors from './src/constants/colors';
+import { SCREEN_WIDTH as width } from './src/constants/screen';
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Starting Frontend!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView>
+      <StatusBar backgroundColor={Colors.bg} barStyle={'dark-content'} />
+      <Home />
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
