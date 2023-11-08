@@ -10,6 +10,7 @@ import * as Platform from '../constants/platform';
 import Header from '../components/header';
 import UploadVideo from '../components/uploadVideo';
 import InfoBanner from '../components/infoBanner';
+import Footer from '../components/footer';
 
 const Home = () => {
     return (
@@ -48,6 +49,7 @@ const Home = () => {
                         </View>
                     </View>
                 </View>
+                <Footer />
             </View>
         </>
     )
@@ -121,8 +123,8 @@ const styles = StyleSheet.create({
     },
     SiteAboutBox: {
         width: '80%',
-        height: '30%',
-        marginTop: 50,
+        height: '25%',
+        marginVertical: 50,
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'space-around',

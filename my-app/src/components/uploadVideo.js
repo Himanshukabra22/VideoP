@@ -15,10 +15,10 @@ const UploadVideo = () => {
                 </View>
                 <View style={styles.subContainer}>
                     <TouchableOpacity activeOpacity={0.75} style={styles.UploadVideoBtn} onPress={() => console.log('Upload Video Button Pressed')}>
-                        <Text style={styles.UploadVideoBtnTxt}>Upload Video</Text>
+                        <Text style={styles.UploadVideoBtnTxt}>Upload Video Link</Text>
                     </TouchableOpacity>
                     <View>
-                        <Text style={styles.Txt}>or drop a file</Text>
+                        <Text style={styles.Txt}>from Google Drive</Text>
                     </View>
                 </View>
             </View>
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     UploadVideoBtn: {
-        paddingHorizontal: 32,
-        paddingVertical: 12,
+        paddingHorizontal: 34,
+        paddingVertical: 16,
         backgroundColor: Colors.primary,
         borderRadius: 40,
         alignItems: 'center',

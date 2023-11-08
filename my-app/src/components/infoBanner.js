@@ -12,8 +12,8 @@ import InfoBox from './infoBox';
 const InfoBanner = () => {
 
     const Arr = [
-        {id: 1, imgSource: require('../../assets/images/Upload.png'), title: 'Upload', description: 'Upload your video file to the website.'},
-        {id: 2, imgSource: require('../../assets/images/Image.png'), title: 'Remove', description: 'Click on the “Remove Noise” button to start the process.'},
+        {id: 1, imgSource: require('../../assets/images/Upload.png'), title: 'Upload', description: 'Upload your video file to the Google Drive.'},
+        {id: 2, imgSource: require('../../assets/images/Image.png'), title: 'Remove', description: 'Provide the Link of the file to the website and remove the noise.'},
         {id: 3, imgSource: require('../../assets/images/Download.png'), title: 'Download', description: 'Once the process is complete, download the file.'},
     ]
 

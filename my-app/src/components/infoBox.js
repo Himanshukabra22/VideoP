@@ -28,7 +28,7 @@ const infoBox = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        height: 150,
+        height: 180,
         width: 250,
         backgroundColor: Colors.typoWhite,
         borderRadius: 20,
